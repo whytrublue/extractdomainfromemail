@@ -21,30 +21,21 @@ if st.button("🚀 Extract Domains"):
 
         st.success(f"✅ Extracted {len(domains)} domains ({len(unique_domains)} unique).")
 
-        # Display unique domains table
+        # Show Unique Domains (scrollable, like you want)
+        st.markdown("### ✅ Unique Domains")
         df_unique = pd.DataFrame(unique_domains, columns=["Unique Domains"])
-        st.dataframe(df_unique)
+        st.dataframe(df_unique, height=300)
 
-        # Display all domains (including duplicates) in text block
-        all_domains_text = '\n'.join(domains)
-        st.markdown("### 📋 Copy All Domains (with Duplicates) to Clipboard")
-        st.code(all_domains_text, language="text")
+        # Show All Domains with duplicates (also scrollable now)
+        st.markdown("### 📋 All Domains (With Duplicates)")
+        df_all = pd.DataFrame(domains, columns=["All Domains"])
+        st.dataframe(df_all, height=300)
 
-        # HTML/JS Copy to Clipboard
-        st.markdown("""
-        <button onclick="navigator.clipboard.writeText(document.getElementById('to_copy').innerText)" 
-            style="margin-top: 10px; padding: 8px 16px; font-size: 16px; border-radius: 6px; border: none; 
-            background-color: #4CAF50; color: white; cursor: pointer;">
-            📋 Copy to Clipboard
-        </button>
-        <pre id="to_copy" style="display:none;">{}</pre>
-        """.format(all_domains_text), unsafe_allow_html=True)
-
-        # Create Excel with two sheets
+        # Excel export: both sheets
         output = BytesIO()
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
             df_unique.to_excel(writer, index=False, sheet_name='Unique Domains')
-            pd.DataFrame(domains, columns=["All Domains (With Duplicates)"]).to_excel(writer, index=False, sheet_name='All Domains')
+            df_all.to_excel(writer, index=False, sheet_name='All Domains')
             writer.save()
 
         st.download_button(
