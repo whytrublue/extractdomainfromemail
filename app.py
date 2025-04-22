@@ -8,7 +8,7 @@ st.set_page_config(page_title="Email Domain Extractor", layout="wide")
 st.markdown("""
     <style>
     .stDataFrame div::-webkit-scrollbar {
-        width: 12px;
+        width: 14px;
     }
 
     .stDataFrame div::-webkit-scrollbar-track {
@@ -16,16 +16,19 @@ st.markdown("""
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb {
-        background-color: yellow;
+        background-color: #FFFF00;
         border-radius: 8px;
         border: 2px solid white;
+        box-shadow: 0 0 10px 2px #FFFF00;
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb:hover {
-        background-color: yellow;
+        background-color: #FFFF00;
+        box-shadow: 0 0 12px 4px #FFD700;
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 # App title and description
