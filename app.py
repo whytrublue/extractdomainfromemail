@@ -32,37 +32,15 @@ if st.button("🚀 Extract Domains"):
 
         st.success(f"✅ Extracted {total_count} domains ({unique_count} unique).")
 
-        # Create the tables
-        df_unique = pd.DataFrame(unique_domains, columns=["Unique Domains"])
-        df_all = pd.DataFrame(domains, columns=["All Domains"])
-
-        # Unique Domains search with highlighting in yellow
+        # Show Unique Domains
         st.markdown(f"### ✅ Unique Domains - {unique_count}")
-        search_input = st.text_input("Search Unique Domains", help="Search within unique domains.")
-        
-        if search_input:
-            # Highlight matches in yellow
-            df_unique['Highlighted Domains'] = df_unique['Unique Domains'].apply(
-                lambda x: f'<span style="background-color: yellow">{x}</span>' if search_input.lower() in x.lower() else x
-            )
-            st.markdown(f"### ✅ Unique Domains - {unique_count}")
-            st.write(df_unique.to_html(escape=False), unsafe_allow_html=True)
-        else:
-            st.dataframe(df_unique, height=300)
+        df_unique = pd.DataFrame(unique_domains, columns=["Unique Domains"])
+        st.dataframe(df_unique, height=300)
 
-        # All Domains (With Duplicates) search with highlighting in yellow
+        # Show All Domains (With Duplicates)
         st.markdown(f"### 📋 All Domains (With Duplicates) - {total_count}")
-        search_input_all = st.text_input("Search All Domains", help="Search within all domains.")
-        
-        if search_input_all:
-            # Highlight matches in yellow
-            df_all['Highlighted Domains'] = df_all['All Domains'].apply(
-                lambda x: f'<span style="background-color: yellow">{x}</span>' if search_input_all.lower() in x.lower() else x
-            )
-            st.markdown(f"### 📋 All Domains (With Duplicates) - {total_count}")
-            st.write(df_all.to_html(escape=False), unsafe_allow_html=True)
-        else:
-            st.dataframe(df_all, height=300)
+        df_all = pd.DataFrame(domains, columns=["All Domains"])
+        st.dataframe(df_all, height=300)
 
         # Excel export with 2 sheets
         output = BytesIO()
@@ -77,3 +55,13 @@ if st.button("🚀 Extract Domains"):
             file_name="email_domains.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
+        # Style for search results
+        search_query = st.text_input("Search Domains:", "")
+        if search_query:
+            search_result = df_unique[df_unique['Unique Domains'].str.contains(search_query, case=False, na=False)]
+            if not search_result.empty:
+                st.markdown("### Search Results:")
+                st.write(search_result.style.applymap(lambda v: 'background-color: yellow' if search_query.lower() in str(v).lower() else '', subset=["Unique Domains"]))
+            else:
+                st.warning("No matching domains found.")
