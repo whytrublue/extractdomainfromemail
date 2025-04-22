@@ -35,12 +35,27 @@ if st.button("🚀 Extract Domains"):
         # Show Unique Domains
         st.markdown(f"### ✅ Unique Domains - {unique_count}")
         df_unique = pd.DataFrame(unique_domains, columns=["Unique Domains"])
-        st.dataframe(df_unique, height=300)
+        
+        # Highlight the searched item in yellow
+        search_query = st.text_input("Search:", "")
+        if search_query:
+            df_unique['Highlight'] = df_unique['Unique Domains'].apply(lambda x: 'background-color: yellow' if search_query.lower() in x.lower() else '')
+        else:
+            df_unique['Highlight'] = ''
+
+        st.dataframe(df_unique.style.apply(lambda x: x['Highlight'], axis=1), height=300)
 
         # Show All Domains (With Duplicates)
         st.markdown(f"### 📋 All Domains (With Duplicates) - {total_count}")
         df_all = pd.DataFrame(domains, columns=["All Domains"])
-        st.dataframe(df_all, height=300)
+        
+        # Highlight the searched item in yellow
+        if search_query:
+            df_all['Highlight'] = df_all['All Domains'].apply(lambda x: 'background-color: yellow' if search_query.lower() in x.lower() else '')
+        else:
+            df_all['Highlight'] = ''
+
+        st.dataframe(df_all.style.apply(lambda x: x['Highlight'], axis=1), height=300)
 
         # Excel export with 2 sheets
         output = BytesIO()
@@ -55,13 +70,3 @@ if st.button("🚀 Extract Domains"):
             file_name="email_domains.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
-
-        # Style for search results
-        search_query = st.text_input("Search Domains:", "")
-        if search_query:
-            search_result = df_unique[df_unique['Unique Domains'].str.contains(search_query, case=False, na=False)]
-            if not search_result.empty:
-                st.markdown("### Search Results:")
-                st.write(search_result.style.applymap(lambda v: 'background-color: yellow' if search_query.lower() in str(v).lower() else '', subset=["Unique Domains"]))
-            else:
-                st.warning("No matching domains found.")
