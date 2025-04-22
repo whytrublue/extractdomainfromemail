@@ -35,38 +35,23 @@ if st.button("🚀 Extract Domains"):
         # Show Unique Domains
         st.markdown(f"### ✅ Unique Domains - {unique_count}")
         df_unique = pd.DataFrame(unique_domains, columns=["Unique Domains"])
-        
-        # Highlight the searched item in yellow
-        search_query = st.text_input("Search:", "")
-        if search_query:
-            df_unique['Highlight'] = df_unique['Unique Domains'].apply(lambda x: 'background-color: yellow' if search_query.lower() in x.lower() else '')
-        else:
-            df_unique['Highlight'] = ''
-
-        st.dataframe(df_unique.style.apply(lambda x: x['Highlight'], axis=1), height=300)
+        st.dataframe(df_unique, height=300)
 
         # Show All Domains (With Duplicates)
         st.markdown(f"### 📋 All Domains (With Duplicates) - {total_count}")
         df_all = pd.DataFrame(domains, columns=["All Domains"])
-        
-        # Highlight the searched item in yellow
-        if search_query:
-            df_all['Highlight'] = df_all['All Domains'].apply(lambda x: 'background-color: yellow' if search_query.lower() in x.lower() else '')
-        else:
-            df_all['Highlight'] = ''
-
-        st.dataframe(df_all.style.apply(lambda x: x['Highlight'], axis=1), height=300)
+        st.dataframe(df_all, height=300)
 
         # Excel export with 2 sheets
-        output = BytesIO()
-        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            df_unique.to_excel(writer, index=False, sheet_name='Unique Domains')
-            df_all.to_excel(writer, index=False, sheet_name='All Domains')
-        output.seek(0)  # Very important for download to work
+output = BytesIO()
+with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    df_unique.to_excel(writer, index=False, sheet_name='Unique Domains')
+    df_all.to_excel(writer, index=False, sheet_name='All Domains')
+output.seek(0)  # Very important for download to work
 
-        st.download_button(
-            label="📥 Download Both Unique and All Domains (Excel with 2 Sheets)",
-            data=output.getvalue(),
-            file_name="email_domains.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+st.download_button(
+    label="📥 Download Both Unique and All Domains (Excel with 2 Sheets)",
+    data=output.getvalue(),
+    file_name="email_domains.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
