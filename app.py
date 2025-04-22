@@ -19,6 +19,7 @@ st.markdown("""
         background-color: black;
         border-radius: 8px;
         border: 2px solid white;
+        min-height: 30px;
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb:hover {
@@ -26,6 +27,7 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 # App title and description
