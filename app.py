@@ -3,7 +3,7 @@ import pandas as pd
 from io import BytesIO
 
 # Page config
-st.set_page_config(page_title="Email Domain Extractor", layout="wide")
+st.set_page_config(page_title=" Extract Domain from Email Address", layout="wide")
 
 st.markdown("""
     <style>
@@ -16,19 +16,16 @@ st.markdown("""
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb {
-        background-color: #FFFF00;
+        background-color: black;
         border-radius: 8px;
         border: 2px solid white;
-        box-shadow: 0 0 10px 2px #FFFF00;
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb:hover {
-        background-color: #FFFF00;
-        box-shadow: 0 0 12px 4px #FFD700;
+        background-color: black;
     }
     </style>
 """, unsafe_allow_html=True)
-
 
 
 # App title and description
