@@ -24,14 +24,19 @@ if st.button("🚀 Extract Domains"):
         st.success(f"✅ Extracted {len(domains)} domains ({len(unique_domains)} unique).")
 
         # Show unique domains in table
-        df = pd.DataFrame(unique_domains, columns=["Unique Domain"])
-        st.dataframe(df)
+        df_unique = pd.DataFrame(unique_domains, columns=["Unique Domain"])
+        st.dataframe(df_unique)
 
-        # Download unique domains as CSV
-        csv = df.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Unique Domains CSV", csv, file_name="unique_domains.csv", mime="text/csv")
+        # Download button for unique domains
+        csv_unique = df_unique.to_csv(index=False).encode('utf-8')
+        st.download_button("📥 Download Unique Domains CSV", csv_unique, file_name="unique_domains.csv", mime="text/csv")
 
-        # Show full (including duplicates) in clipboard copy
+        # Download button for all domains (with duplicates)
+        df_all = pd.DataFrame(domains, columns=["All Domains (With Duplicates)"])
+        csv_all = df_all.to_csv(index=False).encode('utf-8')
+        st.download_button("📥 Download All Domains CSV (with Duplicates)", csv_all, file_name="all_domains.csv", mime="text/csv")
+
+        # Show all domains in copyable text block
         all_domains_text = '\n'.join(domains)
         st.markdown("### 📋 Copy All Domains (with Duplicates) to Clipboard")
         st.code(all_domains_text, language="text")
