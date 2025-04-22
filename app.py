@@ -5,6 +5,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title=" Extract Domain from Email Address", layout="wide")
 
+# Custom CSS for scrollbar and highlight
 st.markdown("""
     <style>
     .stDataFrame div::-webkit-scrollbar {
@@ -25,14 +26,42 @@ st.markdown("""
     .stDataFrame div::-webkit-scrollbar-thumb:hover {
         background-color: black;
     }
+
+    /* Highlighted instruction text */
+    .highlight-instruction {
+        background-color: #fdf7d8;
+        padding: 10px;
+        border: 2px dashed #ffcc00;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
     </style>
 """, unsafe_allow_html=True)
-
-
 
 # App title and description
 st.title("📧 Extract Domain using Email Address")
 st.markdown("Paste up to **1 million emails** (one per line) and click **Extract Domains** to get only the domains.")
+
+# Highlighted instructions
+st.markdown("""
+    <div class="highlight-instruction">
+    📌 **Instructions:**<br>
+    Paste the list of email addresses below. Ensure each email is on a new line.<br>
+    <br>
+    Example:<br>
+    <code>caliptorealestate@gmail.com</code><br>
+    <code>phillip@caliptoinc.com</code><br>
+    <code>karia723@aol.com</code><br>
+    <code>clarkbianchi1@gmail.com</code><br>
+    <code>nick@bhrec.net</code><br>
+    <code>vdavis4466@live.com</code><br>
+    <code>larry@larrylawrencerealtor.com</code><br>
+    <code>polar1_2000@yahoo.com</code><br>
+    <br>
+    The first line can be the header or the actual email address. If a header is present, it will be skipped automatically.
+    </div>
+""", unsafe_allow_html=True)
 
 # Email input
 emails_input = st.text_area("Paste your email list here:", height=300, help="Each email on a new line.")
