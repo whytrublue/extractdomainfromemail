@@ -45,9 +45,10 @@ if st.button("🚀 Extract Domains"):
         # Excel export with 2 sheets
         output = BytesIO()
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            df_unique.to_excel(writer, index=False, sheet_name='Unique Domains')
-            df_all.to_excel(writer, index=False, sheet_name='All Domains')
-            writer.save()
+        df_unique.to_excel(writer, index=False, sheet_name='Unique Domains')
+        df_all.to_excel(writer, index=False, sheet_name='All Domains')
+        output.seek(0)
+
 
         st.download_button(
             label="📥 Download Domains (Excel with 2 Sheets)",
