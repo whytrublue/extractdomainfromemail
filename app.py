@@ -17,23 +17,32 @@ if st.button("🚀 Extract Domains"):
         # Limit to 1 million
         emails = emails[:1_000_000]
 
+        # Extract all domains
         domains = [email.split('@')[1].strip() for email in emails if '@' in email]
-        df = pd.DataFrame(domains, columns=["Domain"])
+        unique_domains = sorted(set(domains))
 
-        st.success(f"✅ Extracted {len(domains)} domains.")
+        # Show total and unique counts
+        st.success(f"✅ Extracted {len(domains)} domains ({len(unique_domains)} unique).")
+
+        # Show unique domains in DataFrame
+        df = pd.DataFrame(unique_domains, columns=["Unique Domain"])
         st.dataframe(df)
 
-        # Convert to CSV
+        # Provide CSV download
         csv = df.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download CSV", csv, file_name="extracted_domains.csv", mime="text/csv")
+        st.download_button("📥 Download Unique Domains CSV", csv, file_name="unique_domains.csv", mime="text/csv")
 
-        # Display as text block for copying
-        all_domains_text = '\n'.join(domains)
-        st.markdown("### 📋 Copy Domains to Clipboard")
+        # Display copyable text block
+        all_domains_text = '\n'.join(unique_domains)
+        st.markdown("### 📋 Copy Unique Domains to Clipboard")
         st.code(all_domains_text, language="text")
 
-        # Add a manual HTML copy button
+        # Add HTML/JS Copy to Clipboard Button
         st.markdown("""
-        <button onclick="navigator.clipboard.writeText(document.getElementById('to_copy').innerText)" style="margin-top: 10px; padding: 8px 16px; font-size: 16px; border-radius: 6px; border: none; background-color: #4CAF50; color: white; cursor: pointer;">📋 Copy to Clipboard</button>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('to_copy').innerText)" 
+            style="margin-top: 10px; padding: 8px 16px; font-size: 16px; border-radius: 6px; border: none; 
+            background-color: #4CAF50; color: white; cursor: pointer;">
+            📋 Copy to Clipboard
+        </button>
         <pre id="to_copy" style="display:none;">{}</pre>
         """.format(all_domains_text), unsafe_allow_html=True)
