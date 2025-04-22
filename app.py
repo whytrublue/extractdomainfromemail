@@ -50,7 +50,7 @@ with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
 output.seek(0)  # Very important for download to work
 
 st.download_button(
-    label="📥 Download Domains (Excel with 2 Sheets)",
+    label="📥 Download Both Unique and All Domains (Excel with 2 Sheets)",
     data=output.getvalue(),
     file_name="email_domains.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
