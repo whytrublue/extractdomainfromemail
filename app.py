@@ -9,15 +9,7 @@ st.markdown("Paste up to **1 million emails** (one per line) and click **Extract
 
 emails_input = st.text_area("Paste your email list here:", height=300, help="Each email on a new line.")
 
-# Add larger buttons for extraction and search
-extract_button = st.button("🚀 Extract Domains", help="Click to extract the domains from your email list.")
-search_unique_button = st.button("🔍 Search Unique Domains", help="Search within unique domains.")
-search_all_button = st.button("🔍 Search All Domains", help="Search within all domains.")
-
-# Input field for search query
-search_query = st.text_input("Enter search query:", help="Enter a domain or keyword to search for.")
-
-if extract_button:
+if st.button("🚀 Extract Domains"):
     if not emails_input.strip():
         st.warning("Please paste some emails to extract.")
     else:
@@ -40,23 +32,35 @@ if extract_button:
 
         st.success(f"✅ Extracted {total_count} domains ({unique_count} unique).")
 
-        # Show Unique Domains
-        st.markdown(f"### ✅ Unique Domains - {unique_count}")
+        # Create the tables
         df_unique = pd.DataFrame(unique_domains, columns=["Unique Domains"])
-        if search_query:
-            df_unique['Match'] = df_unique['Unique Domains'].apply(lambda x: search_query.lower() in x.lower())
-            df_unique = df_unique[df_unique['Match'] == True]
-            st.dataframe(df_unique.style.applymap(lambda x: 'background-color: yellow' if x else '', subset=['Unique Domains']), height=300)
+        df_all = pd.DataFrame(domains, columns=["All Domains"])
+
+        # Unique Domains search with highlighting in yellow
+        st.markdown(f"### ✅ Unique Domains - {unique_count}")
+        search_input = st.text_input("Search Unique Domains", help="Search within unique domains.")
+        
+        if search_input:
+            # Highlight matches in yellow
+            df_unique['Highlighted Domains'] = df_unique['Unique Domains'].apply(
+                lambda x: f'<span style="background-color: yellow">{x}</span>' if search_input.lower() in x.lower() else x
+            )
+            st.markdown(f"### ✅ Unique Domains - {unique_count}")
+            st.write(df_unique.to_html(escape=False), unsafe_allow_html=True)
         else:
             st.dataframe(df_unique, height=300)
 
-        # Show All Domains (With Duplicates)
+        # All Domains (With Duplicates) search with highlighting in yellow
         st.markdown(f"### 📋 All Domains (With Duplicates) - {total_count}")
-        df_all = pd.DataFrame(domains, columns=["All Domains"])
-        if search_query:
-            df_all['Match'] = df_all['All Domains'].apply(lambda x: search_query.lower() in x.lower())
-            df_all = df_all[df_all['Match'] == True]
-            st.dataframe(df_all.style.applymap(lambda x: 'background-color: yellow' if x else '', subset=['All Domains']), height=300)
+        search_input_all = st.text_input("Search All Domains", help="Search within all domains.")
+        
+        if search_input_all:
+            # Highlight matches in yellow
+            df_all['Highlighted Domains'] = df_all['All Domains'].apply(
+                lambda x: f'<span style="background-color: yellow">{x}</span>' if search_input_all.lower() in x.lower() else x
+            )
+            st.markdown(f"### 📋 All Domains (With Duplicates) - {total_count}")
+            st.write(df_all.to_html(escape=False), unsafe_allow_html=True)
         else:
             st.dataframe(df_all, height=300)
 
