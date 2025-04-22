@@ -19,8 +19,8 @@ st.markdown("""
 
     .stDataFrame div::-webkit-scrollbar-thumb {
         background-color: yellow;
-        border-radius: 6px;
-        border: 2px solid white;
+        border-radius: 8px;
+        border: 4px solid white;
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb:hover {
@@ -30,7 +30,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App title and description
-st.title("📧 Email Domain Extractor")
+st.title("📧 Extract Domain using Email Address")
 st.markdown("Paste up to **1 million emails** (one per line) and click **Extract Domains** to get only the domains.")
 
 # Email input
