@@ -20,7 +20,7 @@ st.markdown("""
     .stDataFrame div::-webkit-scrollbar-thumb {
         background-color: yellow;
         border-radius: 8px;
-        border: 4px solid white;
+        border: 2px solid white;
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb:hover {
