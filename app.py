@@ -5,10 +5,8 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Email Domain Extractor", layout="wide")
 
-# Custom CSS for yellow scrollbar thumb
 st.markdown("""
     <style>
-    /* Scrollbar styles specifically for st.dataframe */
     .stDataFrame div::-webkit-scrollbar {
         width: 12px;
     }
@@ -23,11 +21,12 @@ st.markdown("""
         border: 2px solid white;
     }
 
-    .stDataFrame div::-webkit-scrollbar-thumb {
+    .stDataFrame div::-webkit-scrollbar-thumb:hover {
         background-color: yellow;
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 # App title and description
 st.title("📧 Extract Domain using Email Address")
