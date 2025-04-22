@@ -19,7 +19,7 @@ st.markdown("""
         background-color: black;
         border-radius: 8px;
         border: 2px solid white;
-        min-height: 30px;
+        min-height: 50px;
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb:hover {
