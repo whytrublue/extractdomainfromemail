@@ -23,7 +23,7 @@ st.markdown("""
         border: 2px solid white;
     }
 
-    .stDataFrame div::-webkit-scrollbar-thumb:hover {
+    .stDataFrame div::-webkit-scrollbar-thumb {
         background-color: yellow;
     }
     </style>
