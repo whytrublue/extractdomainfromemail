@@ -43,16 +43,16 @@ if st.button("🚀 Extract Domains"):
         st.dataframe(df_all, height=300)
 
         # Excel export with 2 sheets
-        output = BytesIO()
-        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-        df_unique.to_excel(writer, index=False, sheet_name='Unique Domains')
-        df_all.to_excel(writer, index=False, sheet_name='All Domains')
-        output.seek(0)
+output = BytesIO()
+with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    df_unique.to_excel(writer, index=False, sheet_name='Unique Domains')
+    df_all.to_excel(writer, index=False, sheet_name='All Domains')
+output.seek(0)  # Very important for download to work
 
+st.download_button(
+    label="📥 Download Domains (Excel with 2 Sheets)",
+    data=output.getvalue(),
+    file_name="email_domains.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
 
-        st.download_button(
-            label="📥 Download Domains (Excel with 2 Sheets)",
-            data=output.getvalue(),
-            file_name="email_domains.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
