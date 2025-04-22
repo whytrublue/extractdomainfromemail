@@ -26,7 +26,7 @@ st.markdown(
         border-radius: 6px;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: yellow; /* Make the scrollbar thumb yellow on hover */
     }
     ::-webkit-scrollbar-track {
         background: #f1f1f1;
