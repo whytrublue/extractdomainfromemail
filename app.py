@@ -7,6 +7,36 @@ st.set_page_config(page_title="Email Domain Extractor", layout="wide")
 st.title("📧 Email Domain Extractor")
 st.markdown("Paste up to **1 million emails** (one per line) and click **Extract Domains** to get only the domains.")
 
+# Inject custom CSS for scrollbar
+st.markdown(
+    """
+    <style>
+    /* Custom scrollbar */
+    .streamlit-expanderHeader {
+        color: #fff;
+    }
+    .css-1v3fvcr {
+        overflow-y: scroll;
+    }
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 6px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 emails_input = st.text_area("Paste your email list here:", height=300, help="Each email on a new line.")
 
 if st.button("🚀 Extract Domains"):
