@@ -18,7 +18,7 @@ st.markdown("""
     }
 
     .stDataFrame div::-webkit-scrollbar-thumb {
-        background-color: grey;
+        background-color: yellow;
         border-radius: 6px;
         border: 2px solid white;
     }
