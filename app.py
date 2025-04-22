@@ -7,7 +7,7 @@ st.set_page_config(page_title="Email Domain Extractor", layout="wide")
 st.title("📧 Email Domain Extractor")
 st.markdown("Paste up to **1 million emails** (one per line) and click **Extract Domains** to get only the domains.")
 
-# Inject custom CSS for scrollbar in tables
+# Inject custom CSS for the vertical scrollbar
 st.markdown(
     """
     <style>
@@ -22,7 +22,7 @@ st.markdown(
     }
 
     ::-webkit-scrollbar {
-        width: 12px;
+        width: 16px; /* Makes the scrollbar wider */
     }
 
     ::-webkit-scrollbar-thumb {
@@ -31,7 +31,7 @@ st.markdown(
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: yellow; /* Make the scrollbar thumb yellow on hover */
+        background: yellow; /* Changes the thumb color to yellow on hover */
     }
 
     ::-webkit-scrollbar-track {
